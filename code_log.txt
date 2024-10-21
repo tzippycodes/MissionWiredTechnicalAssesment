@@ -1,0 +1,10 @@
+2024-Oct-20-12:56:39, Beginning ETL Process
+2024-Oct-20-12:56:46, Constituent Information converted to Dataframe
+2024-Oct-20-12:56:56, Constituent Email Addresses converted to Dataframe
+2024-Oct-20-12:56:57, Constituent Subscription Status converted to Dataframe
+2024-Oct-20-12:56:57, Beginning Data Transformation
+2024-Oct-20-12:57:47, Data Transformation Complete
+2024-Oct-20-12:57:47, Loading data to destination files
+2024-Oct-20-12:57:50, File "people.csv" created.
+2024-Oct-20-12:57:50, File "acquisition_facts.csv" created.
+2024-Oct-20-12:57:50, Data loaded. Extract, Transform, and Load process complete.
