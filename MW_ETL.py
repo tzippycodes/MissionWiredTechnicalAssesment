@@ -30,7 +30,7 @@ def extract(url, file_name):
     export_file_csv.close()
 
     # Reads the extracted csv to a Pandas Dataframe for transformation
-    df = pd.read_csv(export_file_name, parse_dates=True)
+    df = pd.read_csv(export_file_name)
 
     return df
 
@@ -41,23 +41,20 @@ def transform(df1, df2, df3):
     acquisition_facts_df = pd.DataFrame(['acquisition_facts','acquisitions'])
 
     # Change the necessary columns from each of the dataframes to the initial dataframe. Remove other columns.
-    people_df['email'] = df2['email']
-    people_df['code'] = df1['source']
-    people_df['is_unsub'] = df3['isunsub']
+    people_df['email'] = df2['email'].astype(str)
+    people_df['code'] = df1['source'].astype(str)
+    people_df['is_unsub'] = df3['isunsub'].astype(bool)
     people_df['created_dt'] = df1['create_dt']
     people_df['updated_dt'] = df1['modified_dt']
-    people_df = people_df[['email', 'code', 'is_unsub', 'created_dt', 'updated_dt']]
 
-    acquisition_facts_df['acquisition_date'] = df1['create_dt']
-    acquisition_facts_df ['acquisition_date'] = str(pd.to_datetime(acquisition_facts_df['acquisition_date'], dayfirst=True))
-    #acquisitions = {(acquisition_facts_df['acquisition_date'].value_counts())}
-    #acquisition_facts_df['acquisitions'] = acquisitions 
-    acquisition_facts_df = acquisition_facts_df[['acquisition_date']]
+    acquisition_facts_df['acquisition_date'] = pd.to_datetime(df1['create_dt'])
+    acquisition_facts_df ['acquisition_date'] = acquisition_facts_df['acquisition_date'].map(lambda dt: dt.strftime("%m/%d/%Y"))
+    acquisition_facts_df['acquisitions'] = acquisition_facts_df['acquisition_date'].value_counts() 
 
 
     # Assign the specified data types to the columns in both of the new dataframes
     # change the datetime format
-    #df['date_formatted'] = df['date'].dt.strftime('%Y/%m/%d %H:%M:%S')
+    #df['date_formatted'] = df['date'].dt.strftime('/ %H:%M:%S')
 
     return people_df, acquisition_facts_df
 
@@ -66,7 +63,7 @@ def transform(df1, df2, df3):
 #    Path(file_path).parent.mkdir(parents=True, exist_ok=True)  
 #    df.to_csv(str(file_path), index=False) 
 
-    return csv
+    #return .csv
 
 # Defining variables to be used during function calls
 
